@@ -1,13 +1,15 @@
-const { app, BrowserWindow } = require('electron')
+import { app, BrowserWindow } from 'electron'
 
 let mainWindow
 
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 })
 
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('./src/index.html')
 
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
+
+  // require('./src/menu/menu.js');
 
   mainWindow.on('closed', () => {
     mainWindow = null
