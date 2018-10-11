@@ -1,13 +1,15 @@
-import { app, BrowserWindow } from 'electron'
+const { app, BrowserWindow } = require('electron')
+const MenuClass = require('./menu/menu')
 
 let mainWindow
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 800, height: 600 })
+  mainWindow = new BrowserWindow({ width: 600, height: 800 })
 
   mainWindow.loadFile('./src/index.html')
-
-  mainWindow.webContents.openDevTools()
+  const menu = new MenuClass(mainWindow)
+  menu.init()
+  // mainWindow.webContents.openDevTools()
 
   // require('./src/menu/menu.js');
 

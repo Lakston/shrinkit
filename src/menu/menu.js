@@ -1,20 +1,21 @@
-const { app, Menu } = require('electron')
+const { Menu } = require('electron')
 
-export default class menuBuilder {
+class MenuBuilder {
   constructor(mainWindow) {
     this.mainWindow = mainWindow
+    this.template = []
   }
 
   init() {
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
-      this.setupDevEnvironment()
-    }
-    const template = this.buildMenu()
+    // if (
+    //   process.env.NODE_ENV === 'development' ||
+    //   process.env.DEBUG_PROD === 'true'
+    // ) {
+    //   this.setupDevEnvironment()
+    // }
+    const menuTemplate = this.buildMenu()
 
-    const menu = Menu.buildFromTemplate(template)
+    const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
   }
 
@@ -35,7 +36,7 @@ export default class menuBuilder {
   }
 
   buildMenu() {
-    const template = [
+    this.template = [
       {
         label: 'Edit',
         submenu: [
@@ -51,38 +52,50 @@ export default class menuBuilder {
         submenu: [{ role: 'minimize' }, { role: 'close' }],
       },
     ]
+    console.log(process.platform)
+    if (process.platform === 'darwin') {
+      this.template.unshift({
+        label: 'ShrinkIt',
+        submenu: [
+          {
+            label: 'About ShrinkIt',
+            role: 'about',
+          },
+          {
+            type: 'separator',
+          },
+          {
+            label: 'Hide ShrinkIt',
+            accelerator: 'Command+H',
+            role: 'hide',
+          },
+          {
+            type: 'separator',
+          },
+          {
+            label: 'Quit',
+            accelerator: 'Command+Q',
+            click() {
+              this.mainWindow.quit()
+            },
+          },
+        ],
+      })
+    }
+
+    // if (global.debug.devTools === 1) {
+    //   template[0].submenu.push(
+    //     { type: 'separator' },
+    //     {
+    //       label: 'Open Dev-Tools',
+    //       click: (item, focusedWindow) => {
+    //         if (focusedWindow) focusedWindow.toggleDevTools()
+    //       },
+    //     },
+    //   )
+    // }
+    return this.template
   }
 }
 
-const template = [
-  {
-    label: 'Edit',
-    submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
-      { type: 'separator' },
-      { role: 'cut' },
-      { role: 'copy' },
-      { role: 'paste' },
-      { role: 'pasteandmatchstyle' },
-      { role: 'delete' },
-      { role: 'selectall' },
-    ],
-  },
-]
-
-if (process.platform === 'darwin') {
-  template.unshift({})
-}
-
-if (global.debug.devTools === 1) {
-  template[0].submenu.push(
-    { type: 'separator' },
-    {
-      label: 'Open Dev-Tools',
-      click: (item, focusedWindow) => {
-        if (focusedWindow) focusedWindow.toggleDevTools()
-      },
-    },
-  )
-}
+module.exports = MenuBuilder
