@@ -1,4 +1,4 @@
-const { Menu } = require('electron')
+const { app, Menu } = require('electron')
 
 class MenuBuilder {
   constructor(mainWindow) {
@@ -7,12 +7,12 @@ class MenuBuilder {
   }
 
   init() {
-    // if (
-    //   process.env.NODE_ENV === 'development' ||
-    //   process.env.DEBUG_PROD === 'true'
-    // ) {
-    //   this.setupDevEnvironment()
-    // }
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ) {
+      this.setupDevEnvironment()
+    }
     const menuTemplate = this.buildMenu()
 
     const menu = Menu.buildFromTemplate(menuTemplate)
@@ -52,7 +52,7 @@ class MenuBuilder {
         submenu: [{ role: 'minimize' }, { role: 'close' }],
       },
     ]
-    console.log(process.platform)
+
     if (process.platform === 'darwin') {
       this.template.unshift({
         label: 'ShrinkIt',
@@ -76,7 +76,7 @@ class MenuBuilder {
             label: 'Quit',
             accelerator: 'Command+Q',
             click() {
-              this.mainWindow.quit()
+              app.quit()
             },
           },
         ],
