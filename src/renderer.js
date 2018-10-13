@@ -21,10 +21,10 @@ document.addEventListener('dragover', e => {
   e.stopPropagation()
 })
 
-ipcRenderer.on('fileinfos', (e, fileName, fileExtension, oldSize, newSize) => {
+ipcRenderer.on('fileinfos', (e, fileName, originalSize, newSize, saved) => {
   const parag = document.createElement('p')
   const text = document.createTextNode(
-    `name: ${fileName}, extension: ${fileExtension}, oldsize: ${oldSize},  newsize: ${newSize}`,
+    `name: ${fileName}, oldsize: ${originalSize},  newsize: ${newSize}, you saved ${saved}% !`,
   )
   parag.appendChild(text)
   infoEl.appendChild(parag)
