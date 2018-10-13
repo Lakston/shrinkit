@@ -38,6 +38,12 @@ app.on('activate', () => {
   }
 })
 
+/**
+ * Send data back to renderer
+ * @param  {string} fileName File name
+ * @param  {number} fileSize Original file size
+ * @param  {number} newSize Compressed file size
+ */
 const sendToView = (fileName, fileSize, newSize) => {
   const saved = roundNumber(((fileSize - newSize) / fileSize) * 100)
   mainWindow.webContents.send(
@@ -51,9 +57,8 @@ const sendToView = (fileName, fileSize, newSize) => {
 
 /**
  * Process files
- * @param  {string} name Filename
- * @param  {string} path Filepath
- * @param  {string} size Filesize
+ * @param  {string} fileName File name
+ * @param  {string} filePath File path
  */
 const processFiles = (fileName, filePath) => {
   mainWindow.focus()
