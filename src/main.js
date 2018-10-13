@@ -5,7 +5,7 @@ const mozjpeg = require('mozjpeg')
 const pngquant = require('pngquant-bin')
 const { execFile } = require('child_process')
 const SVGO = require('svgo')
-const { roundNumber } = require('./utils/maths')
+const { roundNumber, formatBytes } = require('./utils/maths')
 const MenuClass = require('./menu/menu')
 
 let mainWindow
@@ -43,8 +43,8 @@ const sendToView = (fileName, fileSize, newSize) => {
   mainWindow.webContents.send(
     'fileinfos',
     fileName,
-    roundNumber(fileSize),
-    roundNumber(newSize),
+    formatBytes(fileSize),
+    formatBytes(newSize),
     saved,
   )
 }
@@ -58,7 +58,7 @@ const sendToView = (fileName, fileSize, newSize) => {
 const processFiles = (fileName, filePath) => {
   mainWindow.focus()
 
-  const originalSize = fs.statSync(filePath).size / 1024
+  const originalSize = fs.statSync(filePath).size
   const extension = path.extname(filePath)
 
   const currentFolder = path.dirname(filePath)
@@ -77,7 +77,7 @@ const processFiles = (fileName, filePath) => {
         if (err) {
           console.log(err)
         }
-        const newSize = fs.statSync(newFilePath).size / 1024
+        const newSize = fs.statSync(newFilePath).size
         sendToView(fileName, originalSize, newSize)
       })
       break
@@ -86,7 +86,7 @@ const processFiles = (fileName, filePath) => {
         if (err) {
           console.log(err)
         }
-        const newSize = fs.statSync(newFilePath).size / 1024
+        const newSize = fs.statSync(newFilePath).size
         sendToView(fileName, originalSize, newSize)
       })
       break
@@ -98,7 +98,7 @@ const processFiles = (fileName, filePath) => {
             if (err) {
               console.log(err)
             }
-            const newSize = fs.statSync(newFilePath).size / 1024
+            const newSize = fs.statSync(newFilePath).size
             sendToView(fileName, originalSize, newSize)
           })
         })
