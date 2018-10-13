@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "mozjpeg": "^6.0.0",
+    "pngquant": "^1.3.0",
     "svgo": "^1.1.1"
   }
 }
