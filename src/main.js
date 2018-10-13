@@ -5,7 +5,7 @@ const mozjpeg = require('mozjpeg')
 const pngquant = require('pngquant-bin')
 const { execFile } = require('child_process')
 const SVGO = require('svgo')
-const { roundNumber, formatBytes } = require('./utils/maths')
+const { roundNumber, formatBytes } = require('./utils/formatters')
 const MenuClass = require('./menu/menu')
 
 let mainWindow
