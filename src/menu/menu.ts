@@ -31,14 +31,14 @@ export default class MenuBuilder {
           {
             accelerator: 'Cmd+R',
             label: 'Reload',
-            role: 'reload'
-          }
-        ]
+            role: 'reload',
+          },
+        ],
       },
       {
         role: 'window',
-        submenu: [{ role: 'minimize' }, { role: 'close' }]
-      }
+        submenu: [{ role: 'minimize' }, { role: 'close' }],
+      },
     ]
 
     if (process.platform === 'darwin') {
@@ -47,27 +47,27 @@ export default class MenuBuilder {
         submenu: [
           {
             label: 'About ShrinkIt',
-            role: 'about'
+            role: 'about',
           },
           {
-            type: 'separator'
+            type: 'separator',
           },
           {
             label: 'Hide ShrinkIt',
             accelerator: 'Command+H',
-            role: 'hide'
+            role: 'hide',
           },
           {
-            type: 'separator'
+            type: 'separator',
           },
           {
             label: 'Quit',
             accelerator: 'Command+Q',
             click() {
               app.quit()
-            }
-          }
-        ]
+            },
+          },
+        ],
       })
     }
 

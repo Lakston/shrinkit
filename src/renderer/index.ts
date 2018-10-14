@@ -25,7 +25,7 @@ document.addEventListener('dragover', e => {
 ipcRenderer.on('fileinfos', (e: Event, fileName: string, originalSize: number, newSize: number, saved: number) => {
   const parag = document.createElement('p')
   const text = document.createTextNode(
-    `name: ${fileName}, oldsize: ${originalSize},  newsize: ${newSize}, shrinked by ${saved}% !`
+    `name: ${fileName}, oldsize: ${originalSize},  newsize: ${newSize}, shrinked by ${saved}% !`,
   )
   parag.appendChild(text)
   dragZone.appendChild(parag)
