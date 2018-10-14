@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 
 const dragZone = document.getElementById('app')
+dragZone.setAttribute('style', 'height:100vh')
 // const infoEl = document.getElementById('fileinfos')
 
 dragZone.onclick = e => {
