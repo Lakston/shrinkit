@@ -6,7 +6,7 @@
 
 <h4 align="center">ShrinkIt is an easy to use image compression app that can handle minification of Jpeg, png and svg files.</h4>
 
-## ❤️ Credits
+## Credits
 
 - [Electron](https://electronjs.org)
 - [mozjpeg](https://github.com/mozilla/mozjpeg)
