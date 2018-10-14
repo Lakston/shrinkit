@@ -1,16 +1,16 @@
-const { app, Menu } = require('electron')
+import { app, BrowserWindow, Menu } from 'electron'
 
-class MenuBuilder {
-  constructor(mainWindow) {
+export default class MenuBuilder {
+  public mainWindow: Electron.BrowserWindow
+  private template: any[]
+
+  constructor(mainWindow: BrowserWindow) {
     this.mainWindow = mainWindow
     this.template = []
   }
 
-  init() {
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
+  public init() {
+    if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
       this.setupDevEnvironment()
     }
     const menuTemplate = this.buildMenu()
@@ -19,38 +19,33 @@ class MenuBuilder {
     Menu.setApplicationMenu(menu)
   }
 
-  setupDevEnvironment() {
-    this.mainWindow.openDevTools()
-    this.mainWindow.webContents.on('context-menu', (e, props) => {
-      const { x, y } = props
-
-      Menu.buildFromTemplate([
-        {
-          label: 'Inspect element',
-          click: () => {
-            this.mainWindow.inspectElement(x, y)
-          },
-        },
-      ]).popup(this.mainWindow)
-    })
+  private setupDevEnvironment() {
+    // mainWindow.webContents.openDevTools()
   }
 
-  buildMenu() {
+  private buildMenu() {
     this.template = [
       {
         label: 'Edit',
         submenu: [
           {
-            label: 'Reload',
             accelerator: 'Cmd+R',
-            role: 'reload',
+            label: 'Reload',
+            role: 'reload'
           },
-        ],
+          {
+            accelerator: 'F12',
+            label: 'Dev Tools',
+            click() {
+              this.mainWindow.webContents.openDevTools()
+            }
+          }
+        ]
       },
       {
         role: 'window',
-        submenu: [{ role: 'minimize' }, { role: 'close' }],
-      },
+        submenu: [{ role: 'minimize' }, { role: 'close' }]
+      }
     ]
 
     if (process.platform === 'darwin') {
@@ -59,27 +54,27 @@ class MenuBuilder {
         submenu: [
           {
             label: 'About ShrinkIt',
-            role: 'about',
+            role: 'about'
           },
           {
-            type: 'separator',
+            type: 'separator'
           },
           {
             label: 'Hide ShrinkIt',
             accelerator: 'Command+H',
-            role: 'hide',
+            role: 'hide'
           },
           {
-            type: 'separator',
+            type: 'separator'
           },
           {
             label: 'Quit',
             accelerator: 'Command+Q',
             click() {
               app.quit()
-            },
-          },
-        ],
+            }
+          }
+        ]
       })
     }
 
@@ -97,5 +92,3 @@ class MenuBuilder {
     return this.template
   }
 }
-
-module.exports = MenuBuilder

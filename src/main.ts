@@ -1,23 +1,23 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
-const fs = require('fs')
-const path = require('path')
-const mozjpeg = require('mozjpeg')
-const pngquant = require('pngquant-bin')
-const { execFile } = require('child_process')
-const SVGO = require('svgo')
-const { roundNumber, formatBytes } = require('./utils/formatters')
-const MenuClass = require('./menu/menu')
+import { execFile } from 'child_process'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import * as fs from 'fs'
+import * as mozjpeg from 'mozjpeg'
+import * as path from 'path'
+import * as pngquant from 'pngquant-bin'
+import * as SVGO from 'svgo'
+import MenuClass from './menu/menu'
+import { formatBytes, roundNumber } from './utils/formatters'
 
-let mainWindow
+let mainWindow: Electron.BrowserWindow
 const svgo = new SVGO()
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({ width: 1000, height: 800 })
 
-  mainWindow.loadFile('./src/index.html')
+  mainWindow.loadFile(path.join(__dirname, '../src/index.html'))
   const menu = new MenuClass(mainWindow)
   menu.init()
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -44,15 +44,9 @@ app.on('activate', () => {
  * @param  {number} fileSize Original file size
  * @param  {number} newSize Compressed file size
  */
-const sendToView = (fileName, fileSize, newSize) => {
+const sendToView = (fileName: string, fileSize: number, newSize: number) => {
   const saved = roundNumber(((fileSize - newSize) / fileSize) * 100)
-  mainWindow.webContents.send(
-    'fileinfos',
-    fileName,
-    formatBytes(fileSize),
-    formatBytes(newSize),
-    saved,
-  )
+  mainWindow.webContents.send('fileinfos', fileName, formatBytes(fileSize), formatBytes(newSize), saved)
 }
 
 /**
@@ -60,7 +54,7 @@ const sendToView = (fileName, fileSize, newSize) => {
  * @param  {string} fileName File name
  * @param  {string} filePath File path
  */
-const processFiles = (fileName, filePath) => {
+const processFiles = (fileName: string, filePath: string) => {
   mainWindow.focus()
 
   const originalSize = fs.statSync(filePath).size
@@ -97,14 +91,15 @@ const processFiles = (fileName, filePath) => {
       break
     case '.svg':
       {
-        const file = fs.readFileSync(filePath, 'utf8', (err, data) => data)
-        svgo.optimize(file).then(result => {
-          fs.writeFile(newFilePath, result.data, err => {
-            if (err) {
-              console.log(err)
-            }
-            const newSize = fs.statSync(newFilePath).size
-            sendToView(fileName, originalSize, newSize)
+        fs.readFile(filePath, { encoding: 'utf8' }, (err: NodeJS.ErrnoException, data: string) => {
+          svgo.optimize(data).then(result => {
+            fs.writeFile(newFilePath, result.data, error => {
+              if (error) {
+                console.log(error)
+              }
+              const newSize = fs.statSync(newFilePath).size
+              sendToView(fileName, originalSize, newSize)
+            })
           })
         })
       }
@@ -115,6 +110,6 @@ const processFiles = (fileName, filePath) => {
 }
 
 // process files on dragged
-ipcMain.on('dragged', (e, fileName, filePath) => {
+ipcMain.on('dragged', (e: any, fileName: string, filePath: string) => {
   processFiles(fileName, filePath)
 })
