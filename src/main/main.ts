@@ -5,18 +5,33 @@ import * as mozjpeg from 'mozjpeg'
 import * as path from 'path'
 import * as pngquant from 'pngquant-bin'
 import * as SVGO from 'svgo'
+import { format as formatUrl } from 'url'
 import MenuClass from '../menu/menu'
 import { formatBytes, roundNumber } from '../utils/formatters'
 
+const isDevelopment = process.env.NODE_ENV !== 'production'
 let mainWindow: Electron.BrowserWindow | null
 const svgo = new SVGO()
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({ width: 1000, height: 800 })
-  console.log(path.join(__dirname, '../../src/index.html'))
-  mainWindow.loadFile(path.join(__dirname, '../../src/index.html'))
+
+  if (isDevelopment) {
+    mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+  } else {
+    mainWindow.loadURL(
+      formatUrl({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file',
+        slashes: true
+      })
+    )
+  }
+
   const menu = new MenuClass(mainWindow)
+
   menu.init()
+
   mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
