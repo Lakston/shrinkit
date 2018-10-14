@@ -1,6 +1,6 @@
 export const roundNumber = (num: number) => Math.round(num)
 
-export const formatBytes: (bytes: number, decimals?: number) => string = (bytes: number, decimals: number) => {
+export const formatBytes: (bytes: number, decimals?: number) => string = (bytes: number, decimals?: number) => {
   if (bytes === 0) {
     return '0 Bytes'
   }

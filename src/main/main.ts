@@ -5,16 +5,16 @@ import * as mozjpeg from 'mozjpeg'
 import * as path from 'path'
 import * as pngquant from 'pngquant-bin'
 import * as SVGO from 'svgo'
-import MenuClass from './menu/menu'
-import { formatBytes, roundNumber } from './utils/formatters'
+import MenuClass from '../menu/menu'
+import { formatBytes, roundNumber } from '../utils/formatters'
 
-let mainWindow: Electron.BrowserWindow
+let mainWindow: Electron.BrowserWindow | null
 const svgo = new SVGO()
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({ width: 1000, height: 800 })
-
-  mainWindow.loadFile(path.join(__dirname, '../src/index.html'))
+  console.log(path.join(__dirname, '../../src/index.html'))
+  mainWindow.loadFile(path.join(__dirname, '../../src/index.html'))
   const menu = new MenuClass(mainWindow)
   menu.init()
   mainWindow.webContents.openDevTools()

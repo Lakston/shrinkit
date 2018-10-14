@@ -32,13 +32,6 @@ export default class MenuBuilder {
             accelerator: 'Cmd+R',
             label: 'Reload',
             role: 'reload'
-          },
-          {
-            accelerator: 'F12',
-            label: 'Dev Tools',
-            click() {
-              this.mainWindow.webContents.openDevTools()
-            }
           }
         ]
       },

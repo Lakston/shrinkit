@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 
-const dragZone = document.getElementById('dragzone')
-const infoEl = document.getElementById('fileinfos')
+const dragZone = document.getElementById('app')
+// const infoEl = document.getElementById('fileinfos')
 
 dragZone.onclick = e => {
   console.log(e)
@@ -27,5 +27,5 @@ ipcRenderer.on('fileinfos', (e: Event, fileName: string, originalSize: number, n
     `name: ${fileName}, oldsize: ${originalSize},  newsize: ${newSize}, shrinked by ${saved}% !`
   )
   parag.appendChild(text)
-  infoEl.appendChild(parag)
+  dragZone.appendChild(parag)
 })
