@@ -1,10 +1,10 @@
 import { ipcRenderer } from 'electron'
+// import global css file to be loaded by webpack
+import '../assets/shrinkit.css'
 
-const dragZone = document.getElementById('app')
-dragZone.setAttribute('style', 'height:100vh')
-// const infoEl = document.getElementById('fileinfos')
+const app = document.getElementById('app')
 
-dragZone.onclick = e => {
+app.onclick = e => {
   console.log(e)
 }
 
@@ -28,5 +28,5 @@ ipcRenderer.on('fileinfos', (e: Event, fileName: string, originalSize: number, n
     `name: ${fileName}, oldsize: ${originalSize},  newsize: ${newSize}, shrinked by ${saved}% !`,
   )
   parag.appendChild(text)
-  dragZone.appendChild(parag)
+  app.appendChild(parag)
 })
