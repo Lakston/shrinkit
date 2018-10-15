@@ -12,6 +12,11 @@
       "category": "your.app.category.type"
     }
   },
+  "electronWebpack": {
+    "main": {
+      "webpackConfig": "./webpack/webpack.config.overload.js"
+    }
+  },
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
@@ -24,6 +29,7 @@
     "@types/mozjpeg": "^5.0.0",
     "@types/pngquant-bin": "^4.0.0",
     "@types/svgo": "^1.0.1",
+    "css-loader": "^1.0.0",
     "electron": "^3.0.3",
     "electron-builder": "^20.28.4",
     "electron-webpack": "^2.3.1",
@@ -31,6 +37,7 @@
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
     "spectron": "^4.0.0",
+    "style-loader": "^0.23.1",
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
