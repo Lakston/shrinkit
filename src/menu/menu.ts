@@ -2,7 +2,7 @@ import { app, BrowserWindow, Menu } from 'electron'
 
 export default class MenuBuilder {
   public mainWindow: Electron.BrowserWindow
-  private template: any[]
+  private template: Electron.MenuItemConstructorOptions[]
 
   constructor(mainWindow: BrowserWindow) {
     this.mainWindow = mainWindow
@@ -10,17 +10,10 @@ export default class MenuBuilder {
   }
 
   public init() {
-    if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-      this.setupDevEnvironment()
-    }
     const menuTemplate = this.buildMenu()
 
     const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
-  }
-
-  private setupDevEnvironment() {
-    // mainWindow.webContents.openDevTools()
   }
 
   private buildMenu() {
@@ -70,18 +63,6 @@ export default class MenuBuilder {
         ],
       })
     }
-
-    // if (global.debug.devTools === 1) {
-    //   template[0].submenu.push(
-    //     { type: 'separator' },
-    //     {
-    //       label: 'Open Dev-Tools',
-    //       click: (item, focusedWindow) => {
-    //         if (focusedWindow) focusedWindow.toggleDevTools()
-    //       },
-    //     },
-    //   )
-    // }
     return this.template
   }
 }
