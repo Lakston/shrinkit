@@ -18,6 +18,7 @@ const createWindow = () => {
 
   if (isDevelopment) {
     mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+    mainWindow.webContents.openDevTools()
   } else {
     mainWindow.loadURL(
       formatUrl({
@@ -29,10 +30,7 @@ const createWindow = () => {
   }
 
   const menu = new MenuClass(mainWindow)
-
   menu.init()
-
-  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     mainWindow = null
