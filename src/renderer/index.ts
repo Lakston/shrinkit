@@ -3,9 +3,6 @@ import { ipcRenderer } from 'electron'
 import '../assets/shrinkit.css'
 
 const app = document.getElementById('app')
-const dragArea = document.createElement('div')
-dragArea.setAttribute('id', 'drag-area')
-app.appendChild(dragArea)
 
 app.onclick = e => {
   console.log(e)

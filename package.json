@@ -14,7 +14,10 @@
   },
   "electronWebpack": {
     "main": {
-      "webpackConfig": "./webpack/webpack.config.overload.js"
+      "webpackConfig": "./webpack/webpack.main.overload.js"
+    },
+    "renderer": {
+      "webpackConfig": "./webpack/webpack.renderer.overload.js"
     }
   },
   "scripts": {
