@@ -14,7 +14,7 @@ let mainWindow: Electron.BrowserWindow | null
 const svgo = new SVGO()
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({ width: 1000, height: 800 })
+  mainWindow = new BrowserWindow({ width: 1200, height: 800 })
 
   if (isDevelopment) {
     mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)

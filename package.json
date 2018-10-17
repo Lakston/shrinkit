@@ -49,6 +49,7 @@
     "webpack": "^4.20.2"
   },
   "dependencies": {
+    "gridlex": "^2.7.1",
     "mozjpeg": "^6.0.0",
     "pngquant-bin": "^5.0.0",
     "source-map-support": "^0.5.9",
