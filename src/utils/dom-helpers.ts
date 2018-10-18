@@ -1,36 +1,45 @@
-import { formatBytes } from '../utils/formatters'
-
-const createDiv = () => document.createElement('div')
+const createEl = (el: string) => document.createElement(el)
 const createText = (content: string) => document.createTextNode(content)
 
-export const createFileList = (fileName: string, originalSize: number) => {
-  // Status
-  const statusEl: HTMLElement = createDiv()
-  statusEl.setAttribute('class', 'status-icon col-1 p-sm text-center')
-  statusEl.appendChild(createText('✓'))
-
+export const createFileList = (fileName: string, originalSize: number, newSize: number, saved: number) => {
   // File Name
-  const fileNameEl: HTMLElement = createDiv()
-  fileNameEl.setAttribute('class', 'file-name col-5 p-sm')
+  const fileNameEl: HTMLElement = createEl('p')
+  fileNameEl.setAttribute('class', 'file-name')
   fileNameEl.appendChild(createText(fileName))
 
+  // Infos container
+  const infoContainerEl = createEl('div')
+  infoContainerEl.setAttribute('class', 'info-cont grid')
+
   // Original Size
-  const originalSizeEl: HTMLElement = createDiv()
-  originalSizeEl.setAttribute('class', 'file-orig-size col-2 p-sm text-right')
-  originalSizeEl.appendChild(createText(formatBytes(originalSize)))
+  const originalSizeEl: HTMLElement = createEl('span')
+  originalSizeEl.setAttribute('class', 'file-orig-size col-4')
+  originalSizeEl.appendChild(createText(`Original size: ${originalSize}`))
 
   // Compressed Size
-  const compressedSizeEl: HTMLElement = createDiv()
-  compressedSizeEl.setAttribute('class', 'file-new-size col-2 p-sm text-right')
+  const compressedSizeEl: HTMLElement = createEl('span')
+  compressedSizeEl.setAttribute('class', 'file-new-size col-4')
+  compressedSizeEl.appendChild(createText(`Compressed: ${newSize}`))
 
   // Saved
-  const savedEl: HTMLElement = createDiv()
-  savedEl.setAttribute('class', 'savings col-2 p-sm text-right')
+  const savedEl: HTMLElement = createEl('span')
+  savedEl.setAttribute('class', 'savings col-4')
+  savedEl.appendChild(createText(`Shrinked by: ${saved}%`))
 
-  const fragment = document.createDocumentFragment()
-  ;[statusEl, fileNameEl, originalSizeEl, compressedSizeEl, savedEl].forEach(element => {
-    fragment.appendChild(element)
+  // Append all
+  ;[originalSizeEl, compressedSizeEl, savedEl].forEach(element => {
+    infoContainerEl.appendChild(element)
   })
 
+  const fragment = document.createDocumentFragment()
+  fragment.appendChild(fileNameEl)
+  fragment.appendChild(infoContainerEl)
+
   return fragment
+}
+
+export const createFooter = () => {
+  const footer = createEl('div')
+  footer.setAttribute('class', 'footer')
+  return footer
 }

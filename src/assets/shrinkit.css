@@ -1,60 +1,82 @@
 /* VARIABLES */
+
 :root {
   --spacing-sm: 5px;
   --spacing-m: 10px;
 }
 
 /* RESETS */
+
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   padding: 0;
   font-size: 14px;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 /* DESIGN SYSTEM */
+
 .d-flex {
   display: flex;
 }
+
 .flex-col {
   flex-direction: column;
 }
+
 .grow {
   flex-grow: 1;
 }
+
 .p-sm {
   padding: var(--spacing-sm);
 }
+
 .p-m {
   padding: var(--spacing-m);
 }
+
 .text-center {
   text-align: center;
 }
+
 .text-right {
   text-align: right;
 }
 
 /* ANIMATIONS */
+
 @keyframes swoopIn {
-  0%
-    { transform: translate3d(0, 40px, 0); }
-  100%
-    { transform: translate3d(0, 0, 0); }
+  0% {
+    transform: translate3d(0, 40px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
+
 @keyframes fadeIn {
-  0%
-    { opacity: 0; }
-  100%
-   { opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* DECLARATIONS */
+
 #app {
   height: 100vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--spacing-m);
 }
 
 #drag-area {
@@ -63,10 +85,37 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 50%;
+  height: 30%;
   border: 2px dashed grey;
+  font-size: 18px;
 }
 
-#table {
-  visibility: hidden;
+.row {
+  width: 100%;
+  padding: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
+  animation: swoopIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards, fadeIn 1s cubic-bezier(0.39, 0.58, 0.57, 1) forwards;
+}
+
+.file-name {
+  padding: 0 0 var(--spacing-sm) 0;
+  margin: 0;
+}
+
+footer {
+  height: 40px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: -webkit-linear-gradient(top, #ebebeb, #d5d5d5);
+  color: #4d494d;
+  font-size: 11pt;
+  line-height: 20px;
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid #f3f1f3;
+  border-bottom: 1px solid #b1aeb1;
+  /* border-top-left-radius: 6px;
+  border-top-right-radius: 6px; */
+  user-select: none;
+  cursor: default;
 }
