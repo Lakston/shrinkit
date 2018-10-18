@@ -28,9 +28,7 @@ document.addEventListener('drop', (e: DragEvent) => {
     const name = e.dataTransfer.files[key].name
     const size = fs.statSync(path).size
 
-    // const fileInfosEl: HTMLElement = document.createElement('div')
-    // fileInfosEl.setAttribute('class', 'grid')
-    // fileInfosEl.appendChild(createFileList(name, size))
+    resultsTable.style.visibility = 'visible'
     resultsTable.appendChild(createFileList(name, size))
 
     ipcRenderer.send('dragged', name, path)
