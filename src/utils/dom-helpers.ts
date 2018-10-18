@@ -15,7 +15,7 @@ export const createFileList = (fileName: string, originalSize: number) => {
 
   // File Name
   const fileNameEl: HTMLElement = createDiv()
-  fileNameEl.setAttribute('class', 'file-name col p-sm')
+  fileNameEl.setAttribute('class', 'file-name col-4 p-sm')
   fileNameEl.appendChild(createText(fileName))
 
   // Original Size
