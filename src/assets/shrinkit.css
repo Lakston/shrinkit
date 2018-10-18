@@ -29,6 +29,14 @@ body {
   padding: var(--spacing-m);
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 #app {
   height: 100vh;
   width: 100%;

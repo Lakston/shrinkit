@@ -12,7 +12,7 @@ interface IFileData {
 }
 
 const app = document.getElementById('app')
-const results = document.getElementById('results')
+const resultsTable = document.getElementById('table')
 const files: IFileData[] = []
 
 app.onclick = e => {
@@ -28,10 +28,10 @@ document.addEventListener('drop', (e: DragEvent) => {
     const name = e.dataTransfer.files[key].name
     const size = fs.statSync(path).size
 
-    const fileInfosEl: HTMLElement = document.createElement('div')
-    fileInfosEl.setAttribute('class', 'grid')
-    fileInfosEl.appendChild(createFileList(name, size))
-    results.appendChild(fileInfosEl)
+    // const fileInfosEl: HTMLElement = document.createElement('div')
+    // fileInfosEl.setAttribute('class', 'grid')
+    // fileInfosEl.appendChild(createFileList(name, size))
+    resultsTable.appendChild(createFileList(name, size))
 
     ipcRenderer.send('dragged', name, path)
 
