@@ -43,3 +43,14 @@ export const createFooter = () => {
   footer.setAttribute('class', 'footer')
   return footer
 }
+
+export const addMultipleListeners = (el: HTMLElement, events: string[], callback: () => void) => {
+  if (!(events instanceof Array)) {
+    throw new Error(`addMultipleListeners:  
+    please supply an array of eventstrings (ex: ["drag","mouseleave"])`)
+  } else {
+    for (const event of events) {
+      el.addEventListener(event, callback)
+    }
+  }
+}
