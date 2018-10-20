@@ -9,7 +9,7 @@ export const createFileList = (fileName: string, originalSize: number, newSize: 
 
   // Infos container
   const infoContainerEl = createEl('div')
-  infoContainerEl.setAttribute('class', 'info-cont grid')
+  infoContainerEl.setAttribute('class', 'info-cont grid-noBottom')
 
   // Original Size
   const originalSizeEl: HTMLElement = createEl('span')
