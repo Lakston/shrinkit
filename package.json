@@ -52,6 +52,8 @@
     "gridlex": "^2.7.1",
     "mozjpeg": "^6.0.0",
     "pngquant-bin": "^5.0.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "source-map-support": "^0.5.9",
     "svgo": "^1.1.1"
   }
