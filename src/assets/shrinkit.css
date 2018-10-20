@@ -1,13 +1,16 @@
 /* VARIABLES */
+
 :root {
   --spacing-sm: 5px;
   --spacing-m: 10px;
 }
 
 /* RESETS */
+
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -15,43 +18,57 @@ body {
 }
 
 /* DESIGN SYSTEM */
+
 .d-flex {
   display: flex;
 }
+
 .flex-col {
   flex-direction: column;
 }
+
 .grow {
   flex-grow: 1;
 }
+
 .p-sm {
   padding: var(--spacing-sm);
 }
+
 .p-m {
   padding: var(--spacing-m);
 }
+
 .text-center {
   text-align: center;
 }
+
 .text-right {
   text-align: right;
 }
 
 /* ANIMATIONS */
+
 @keyframes swoopIn {
-  0%
-    { transform: translate3d(0, 40px, 0); }
-  100%
-    { transform: translate3d(0, 0, 0); }
+  0% {
+    transform: translate3d(0, 40px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
+
 @keyframes fadeIn {
-  0%
-    { opacity: 0; }
-  100%
-   { opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* DECLARATIONS */
+
 #app {
   height: 100vh;
   width: 100%;
@@ -67,6 +84,4 @@ body {
   border: 2px dashed grey;
 }
 
-#table {
-  visibility: hidden;
-}
+#table {}
