@@ -1,14 +1,22 @@
 import { ipcRenderer } from 'electron'
 import '../../node_modules/gridlex/dist/gridlex.min.css'
+import '../assets/images/drop-icon.png'
 import '../assets/shrinkit.css'
-import { createFileList, createFooter } from '../utils/dom-helpers'
+import { addMultipleListeners, createFileList } from '../utils/dom-helpers'
 
-const app = document.getElementById('app')
+// const app = document.getElementById('app')
+const dragArea = document.getElementById('drag-area')
 const resultsTable = document.getElementById('table')
 
-app.onclick = e => {
-  console.log(e)
-}
+dragArea.addEventListener('dragover', (e: DragEvent) => {
+  dragArea.style.border = '3px dashed #09f'
+  dragArea.style.backgroundColor = 'rgba(0, 153, 255, .05)'
+})
+
+addMultipleListeners(dragArea, ['dragleave', 'dragend', 'mouseout', 'drop'], () => {
+  dragArea.style.border = '3px dashed #DADFE3'
+  dragArea.style.backgroundColor = 'transparent'
+})
 
 document.addEventListener('drop', (e: DragEvent) => {
   e.preventDefault()
