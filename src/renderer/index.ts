@@ -1,23 +1,21 @@
 import { ipcRenderer } from 'electron'
-import * as fs from 'fs'
 import '../../node_modules/gridlex/dist/gridlex.min.css'
 import '../assets/shrinkit.css'
-import { createFileList } from '../utils/dom-helpers'
+import { addMultipleListeners, createRow } from '../utils/dom-helpers'
 
-interface IFileData {
-  id: number
-  name: string
-  size: number
-  status: string
-}
-
-const app = document.getElementById('app')
+// const app = document.getElementById('app')
+const dragArea = document.getElementById('drag-area')
 const resultsTable = document.getElementById('table')
-const files: IFileData[] = []
 
-app.onclick = e => {
-  console.log(e)
-}
+dragArea.addEventListener('dragover', (e: DragEvent) => {
+  dragArea.style.border = '3px dashed #09f'
+  dragArea.style.backgroundColor = 'rgba(0, 153, 255, .05)'
+})
+
+addMultipleListeners(dragArea, ['dragleave', 'dragend', 'mouseout', 'drop'], () => {
+  dragArea.style.border = '3px dashed #DADFE3'
+  dragArea.style.backgroundColor = 'transparent'
+})
 
 document.addEventListener('drop', (e: DragEvent) => {
   e.preventDefault()
@@ -26,15 +24,8 @@ document.addEventListener('drop', (e: DragEvent) => {
   Object.keys(e.dataTransfer.files).forEach((key: any, i) => {
     const path = e.dataTransfer.files[key].path
     const name = e.dataTransfer.files[key].name
-    const size = fs.statSync(path).size
-
-    resultsTable.style.visibility = 'visible'
-    resultsTable.appendChild(createFileList(name, size))
 
     ipcRenderer.send('dragged', name, path)
-
-    files.push({ id: i, name, size, status: 'pending' })
-    console.log(files)
   })
 })
 
@@ -43,6 +34,10 @@ document.addEventListener('dragover', e => {
   e.stopPropagation()
 })
 
-ipcRenderer.on('fileinfos', (e: Event, fileName: string, originalSize: number, newSize: number, saved: number) => {
-  // app.appendChild(fileInfosEl)
+ipcRenderer.on('fileinfos', (e: Event, fileName: string, originalSize: number, newSize: number) => {
+  resultsTable.appendChild(createRow('success', { fileName, originalSize, newSize }))
+})
+
+ipcRenderer.on('fileError', (e: Event, fileName: string, errMsg: string) => {
+  resultsTable.appendChild(createRow('error', { fileName, errMsg }))
 })

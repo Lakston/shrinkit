@@ -7,19 +7,22 @@
         content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible"
         content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+        rel="stylesheet">
   <title>Document</title>
 </head>
 
 <body>
-  <div id="app"
-       class="d-flex flex-col p-sm">
+  <div id="app">
     <div id="drag-area"
          class="p-sm">
-      <p>drag your files here to compress them</p>
-      <p>Shrinkit can hadle jpg, svg and png files.</p>
+      <p id="drag-msg">Drag your files here</p>
+      <img src="./assets/images/drop-icon.png"
+           alt=""
+           class="icon">
+      <p id="file-types">Shrinkit can handle jpg, svg and png files.</p>
     </div>
-    <div class="grid grow p-m"
-         id="table">
+    <div id="table">
     </div>
   </div>
 </body>

@@ -7,7 +7,6 @@ import * as pngquant from 'pngquant-bin'
 import * as SVGO from 'svgo'
 import { format as formatUrl } from 'url'
 import MenuClass from '../menu/menu'
-import { formatBytes, roundNumber } from '../utils/formatters'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 let mainWindow: Electron.BrowserWindow | null
@@ -51,22 +50,13 @@ app.on('activate', () => {
   }
 })
 
-/**
- * Send data back to renderer
- * @param  {string} fileName File name
- * @param  {number} fileSize Original file size
- * @param  {number} newSize Compressed file size
- */
 const sendToView = (fileName: string, fileSize: number, newSize: number) => {
-  const saved = roundNumber(((fileSize - newSize) / fileSize) * 100)
-  mainWindow.webContents.send('fileinfos', fileName, formatBytes(fileSize), formatBytes(newSize), saved)
+  mainWindow.webContents.send('fileinfos', fileName, fileSize, newSize)
+}
+const sendErrToView = (fileName: string, errMsg: string) => {
+  mainWindow.webContents.send('fileError', fileName, errMsg)
 }
 
-/**
- * Process files
- * @param  {string} fileName File name
- * @param  {string} filePath File path
- */
 const processFiles = (fileName: string, filePath: string) => {
   mainWindow.focus()
 
@@ -87,7 +77,7 @@ const processFiles = (fileName: string, filePath: string) => {
     case '.jpeg':
       execFile(mozjpeg, ['-outfile', newFilePath, filePath], err => {
         if (err) {
-          console.log(err)
+          sendErrToView(fileName, err.message)
         }
         const newSize = fs.statSync(newFilePath).size
         sendToView(fileName, originalSize, newSize)
@@ -96,7 +86,7 @@ const processFiles = (fileName: string, filePath: string) => {
     case '.png':
       execFile(pngquant, ['-fo', newFilePath, filePath], err => {
         if (err) {
-          console.log(err)
+          sendErrToView(fileName, err.message)
         }
         const newSize = fs.statSync(newFilePath).size
         sendToView(fileName, originalSize, newSize)
@@ -108,7 +98,7 @@ const processFiles = (fileName: string, filePath: string) => {
           svgo.optimize(data).then(result => {
             fs.writeFile(newFilePath, result.data, error => {
               if (error) {
-                console.log(error)
+                sendErrToView(fileName, err.message)
               }
               const newSize = fs.statSync(newFilePath).size
               sendToView(fileName, originalSize, newSize)
@@ -118,7 +108,7 @@ const processFiles = (fileName: string, filePath: string) => {
       }
       break
     default:
-      console.log('non supported')
+      sendErrToView(fileName, 'Unsupported file type (jpg, svg and png only)')
   }
 }
 
