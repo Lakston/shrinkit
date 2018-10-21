@@ -4,6 +4,8 @@
   --spacing-sm: 5px;
   --spacing-m: 10px;
   --spacing-l: 20px;
+  /* colors */
+  --grey: #9c9c9c;
 }
 
 /* RESETS */
@@ -53,7 +55,7 @@ body {
 }
 
 .small-txt {
-  color: #9c9c9c;
+  color: var(--grey);
 }
 
 /* ANIMATIONS */
@@ -88,6 +90,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: var(--grey);
   width: 100%;
   height: 20%;
   border: 3px dashed #DADFE3;
@@ -103,8 +106,7 @@ body {
 
 #drag-msg {
   font-size: 30px;
-  color: lightgray;
-  margin: var(--spacing-m) 0 var(--spacing-m) 0;
+  margin-top: var(--spacing-m);
 }
 
 #table {
