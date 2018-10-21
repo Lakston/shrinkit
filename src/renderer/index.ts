@@ -1,8 +1,7 @@
 import { ipcRenderer } from 'electron'
 import '../../node_modules/gridlex/dist/gridlex.min.css'
-import '../assets/images/drop-icon.png'
 import '../assets/shrinkit.css'
-import { addMultipleListeners, createFileList } from '../utils/dom-helpers'
+import { addMultipleListeners, createRow } from '../utils/dom-helpers'
 
 // const app = document.getElementById('app')
 const dragArea = document.getElementById('drag-area')
@@ -35,11 +34,10 @@ document.addEventListener('dragover', e => {
   e.stopPropagation()
 })
 
-ipcRenderer.on('fileinfos', (e: Event, fileName: string, originalSize: number, newSize: number, saved: number) => {
-  // Row
-  const rowEl: HTMLElement = document.createElement('div')
-  rowEl.setAttribute('class', 'row p-m')
-  rowEl.appendChild(createFileList(fileName, originalSize, newSize, saved))
+ipcRenderer.on('fileinfos', (e: Event, fileName: string, originalSize: number, newSize: number) => {
+  resultsTable.appendChild(createRow('success', { fileName, originalSize, newSize }))
+})
 
-  resultsTable.appendChild(rowEl)
+ipcRenderer.on('fileError', (e: Event, fileName: string, errMsg: string) => {
+  resultsTable.appendChild(createRow('error', { fileName, errMsg }))
 })
