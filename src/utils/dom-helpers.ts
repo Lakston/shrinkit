@@ -3,11 +3,15 @@ import { formatBytes, roundNumber } from './formatters'
 const createEl = (el: string) => document.createElement(el)
 const createText = (content: string) => document.createTextNode(content)
 
-interface IRowArguments {
-  fileName: string
-  originalSize?: number
-  newSize?: number
-  errMsg?: string
+export const addMultipleListeners = (el: HTMLElement, events: string[], callback: () => void) => {
+  if (!(events instanceof Array)) {
+    throw new Error(`addMultipleListeners:  
+    please supply an array of eventstrings (ex: ["drag","mouseleave"])`)
+  } else {
+    for (const event of events) {
+      el.addEventListener(event, callback)
+    }
+  }
 }
 
 const createFileList = (fileName: string, originalSize: number, newSize: number) => {
@@ -77,9 +81,17 @@ const displayError = (fileName: string, err: string) => {
   return fragment
 }
 
+interface IRowArguments {
+  fileName: string
+  originalSize?: number
+  newSize?: number
+  errMsg?: string
+}
+
 export const createRow = (type: 'success' | 'error', args: IRowArguments) => {
   const rowEl: HTMLElement = createEl('div')
   rowEl.setAttribute('class', `row ${type}-row grid-noBottom`)
+
   const InfosEl: HTMLElement = createEl('div')
   InfosEl.setAttribute('class', 'col')
   if (type === 'success') {
@@ -88,6 +100,7 @@ export const createRow = (type: 'success' | 'error', args: IRowArguments) => {
   if (type === 'error') {
     InfosEl.appendChild(displayError(args.fileName, args.errMsg))
   }
+
   const iconEl: HTMLElement = createEl('div')
   iconEl.setAttribute('class', `col-1 image-container ${type}`)
 
@@ -95,15 +108,4 @@ export const createRow = (type: 'success' | 'error', args: IRowArguments) => {
   rowEl.appendChild(iconEl)
 
   return rowEl
-}
-
-export const addMultipleListeners = (el: HTMLElement, events: string[], callback: () => void) => {
-  if (!(events instanceof Array)) {
-    throw new Error(`addMultipleListeners:  
-    please supply an array of eventstrings (ex: ["drag","mouseleave"])`)
-  } else {
-    for (const event of events) {
-      el.addEventListener(event, callback)
-    }
-  }
 }
