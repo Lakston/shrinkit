@@ -9,7 +9,12 @@
     "paths": {
       "*": ["node_modules/*"]
     },
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "plugins": [
+      {
+        "name": "typescript-lit-html-plugin"
+      }
+    ]
   },
   "include": ["src/**/*"]
 }
