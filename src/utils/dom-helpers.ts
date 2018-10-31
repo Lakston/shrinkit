@@ -1,3 +1,4 @@
+import { html } from 'lit-html'
 import { formatBytes, roundNumber } from './formatters'
 
 const createEl = (el: string) => document.createElement(el)
@@ -16,6 +17,19 @@ export const addMultipleListeners = (el: HTMLElement, events: string[], callback
 
 const createFileList = (fileName: string, originalSize: number, newSize: number) => {
   const saved = roundNumber(((originalSize - newSize) / originalSize) * 100)
+
+  // lit-html rewrite
+  const listFragment = () => {
+    html`
+      <p class="file-name">${fileName}</p>
+      <div class="info-cont grid-noBottom">
+        <span class="file-orig-size col-4">
+          <span class="small-txt">original: </span><span>${formatBytes(originalSize)}</span>
+        </span>
+        span	
+      </div>
+    `
+  }
 
   // File Name
   const fileNameEl: HTMLElement = createEl('p')
