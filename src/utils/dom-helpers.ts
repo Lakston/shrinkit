@@ -20,13 +20,13 @@ const createFileList = (fileName: string, originalSize: number, newSize: number)
 
   // lit-html rewrite
   const listFragment = () => {
+    // tslint:disable-next-line:no-unused-expression
     html`
       <p class="file-name">${fileName}</p>
       <div class="info-cont grid-noBottom">
         <span class="file-orig-size col-4">
           <span class="small-txt">original: </span><span>${formatBytes(originalSize)}</span>
         </span>
-        span	
       </div>
     `
   }
