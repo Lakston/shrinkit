@@ -2,7 +2,7 @@
   "extends": "./node_modules/electron-webpack/tsconfig-base.json",
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "sourceMap": true,
     "outDir": "build",
     "baseUrl": ".",
@@ -10,11 +10,7 @@
       "*": ["node_modules/*"]
     },
     "strictNullChecks": false,
-    "plugins": [
-      {
-        "name": "typescript-lit-html-plugin"
-      }
-    ]
+    "plugins": []
   },
   "include": ["src/**/*"]
 }
