@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron'
 import '../../node_modules/gridlex/dist/gridlex.min.css'
+
 import '../assets/shrinkit.css'
 import { addMultipleListeners, createRow } from '../utils/dom-helpers'
 
