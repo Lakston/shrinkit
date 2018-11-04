@@ -1,5 +1,3 @@
-// import { html, render, TemplateResult } from '../../node_modules/lit-html/lit-html'
-// import html from '../../node_modules/nanohtml/lib/browser'
 import html from '../../node_modules/nanohtml'
 import { formatBytes, roundNumber } from './formatters'
 
