@@ -12,10 +12,10 @@ export const addMultipleListeners = (el: HTMLElement, events: string[], callback
   }
 }
 
-const createFileInfos = (fileName: string, originalSize: number, newSize: number) => {
+const displaySuccess = (fileName: string, originalSize: number, newSize: number) => {
   const saved = roundNumber(((originalSize - newSize) / originalSize) * 100)
 
-  const infosFragment = html`
+  return html`
     <div>
       <p class="file-name">${fileName}</p>
       <div class="info-cont grid-noBottom">
@@ -31,19 +31,15 @@ const createFileInfos = (fileName: string, originalSize: number, newSize: number
       </div>
     </div>
   `
-
-  return infosFragment
 }
 
 const displayError = (fileName: string, err: string) => {
-  const errFragment = html`
+  return html`
     <div>
       <p class="file-name">${fileName}</p>
       <p class="error-text">${err}</p>
     </div>
   `
-
-  return errFragment
 }
 
 interface IRowArguments {
@@ -54,15 +50,14 @@ interface IRowArguments {
 }
 
 export const createRow = (type: 'success' | 'error', args: IRowArguments) => {
-  const row = html`
+  return html`
       <div class="row ${type}-row grid-noBottom">
         <div class="col">${
           type === 'success'
-            ? createFileInfos(args.fileName, args.originalSize, args.newSize)
+            ? displaySuccess(args.fileName, args.originalSize, args.newSize)
             : displayError(args.fileName, args.errMsg)
         }</div>
         <div class="col-1 image-container ${type}"></div>
       </div>
     `
-  return row
 }
